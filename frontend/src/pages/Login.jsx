@@ -1,6 +1,6 @@
 import React from 'react'
-import { FaUser, FaSignInAlt } from 'react-icons/fa'
-import { useState, useEfect } from 'react'
+import { FaSignInAlt } from 'react-icons/fa'
+import { useState, useEffect } from 'react'
 
 function Login() {
     const [formData, setFormData] =useState({

@@ -2,6 +2,12 @@ const express = require('express')
 const mongoose = require('mongoose')
 const { errorHandler } = require('./middlewares/errorMiddleware')
 require('dotenv').config()
+const cors = require('cors')
+const corsOptions = {
+    origin:'*', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200,
+ }
 const path =  require('path')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
@@ -17,6 +23,7 @@ const app = express()
 const port = process.env.PORT || 9900
 
 app.use(morgan('dev'))
+app.use(cors(corsOptions))
 app.use(express.json());
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views') )
