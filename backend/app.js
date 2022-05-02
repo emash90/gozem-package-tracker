@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const { errorHandler } = require('./middlewares/errorMiddleware')
 require('dotenv').config()
+const path =  require('path')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const urlencoded = require('body-parser/lib/types/urlencoded')
@@ -17,6 +18,8 @@ const port = process.env.PORT || 9900
 
 app.use(morgan('dev'))
 app.use(express.json());
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views') )
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/api/user', require('./routes/userRoutes'))
 app.use('/api/package', require('./routes/packageRoutes'))
