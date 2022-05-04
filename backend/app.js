@@ -28,10 +28,16 @@ app.use(express.json());
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views') )
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use('/api/user', require('./routes/userRoutes'))
+app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/package', require('./routes/packageRoutes'))
 app.use('/api/delivery', require('./routes/deliveryRoutes'))
 app.use(errorHandler)
+
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 
 mongoose.connect(process.env.MONGO_URI, {

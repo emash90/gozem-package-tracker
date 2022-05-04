@@ -8,7 +8,7 @@ const registerUser = asyncHandler(async(req, res) => {
     try {
         
         const { firstName, lastName, email, accountType, password } =req.body
-        if(!firstName || !lastName || !email || !accountType || !password) {
+        if(!firstName || !lastName || !email || !password) {
             res.status(400)
             throw new Error('please fill all fields')
         }
@@ -35,7 +35,7 @@ const registerUser = asyncHandler(async(req, res) => {
                 _id: user.id,
                 name: user.firstName,
                 email: user.email,
-                user: accountType,
+                accountType: accountType,
                 token: generateToken(user._id)
             })
         } else{

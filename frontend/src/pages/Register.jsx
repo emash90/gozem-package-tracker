@@ -11,11 +11,12 @@ function Register() {
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
+        accountType: '',
         email: '',
         password: '',
         password2: ''
     })
-    const { firstName, lastName, email, password, password2 } = formData
+    const { firstName, lastName, accountType, email, password, password2 } = formData
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -27,7 +28,8 @@ function Register() {
         }
 
         if(isSuccess || user) {
-            navigate('/')
+            toast(`hey ${user.name}, you can now login`)
+            navigate('/login')
         }
 
         dispatch(reset())
@@ -46,10 +48,15 @@ function Register() {
 
         if(password !== password2) {
             toast.error('passwords do not match')
+        } else if(!firstName || !lastName || !email ||! password || !accountType){
+            toast.error('Please ensure all fields are filled')
+        } else if (accountType !== "driver" && accountType !== "client") {
+            toast.error("please select either 'client' or 'driver'")
         } else {
             const userData = {
                 firstName,
                 lastName,
+                accountType,
                 email, 
                 password
             }
@@ -90,7 +97,7 @@ function Register() {
                         placeholder='Enter your last name'
                         onChange={onChange}
                     />
-                </div>
+                    </div>
                 <div className="form-group">
                     <input 
                         type='email'
@@ -121,6 +128,17 @@ function Register() {
                         id='password2'
                         value={password2}
                         placeholder='Confirm password'
+                        onChange={onChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <input 
+                        type='text'
+                        name='accountType'
+                        className='form-control'
+                        id='accountType'
+                        value={accountType}
+                        placeholder='register as a client or driver'
                         onChange={onChange}
                     />
                 </div>
