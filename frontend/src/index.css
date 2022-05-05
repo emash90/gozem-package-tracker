@@ -76,6 +76,7 @@ h3 {
 }
 
 .heading {
+  text-align: center;
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 50px;
@@ -128,13 +129,71 @@ h3 {
   margin-bottom: 10px;
   font-family: inherit;
 }
-
+.form-group-details { 
+  width: 25%;
+  padding: 10px;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-family: inherit;
+  margin-right: 5px;
+}
+.inline-form-group, .from-details {
+  display: flex;
+}
+span {
+  font-size: 12px;
+}
+.form-group-name input{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-family: inherit;
+  margin-right: 5px;
+}
+.form-group-name label {
+  text-align: left;
+  display: block;
+  margin: 0 0 5px 3px;
+}
+.form-group-address input{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-family: inherit;
+  margin-right: 5px;
+}
+.form-group-address label{
+  text-align: left;
+  display: block;
+  margin: 0 0 5px 3px;
+}
 .form-group label {
   text-align: left;
   display: block;
   margin: 0 0 5px 3px;
 }
-
+.form-group-location input {
+  width: 25%;
+  padding: 10px;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-family: inherit;
+  margin-right: 5px;
+}
+.form-group-location label {
+  margin-right: 22px;
+}
+.from-to-details {
+  display: flex;
+  width: 100%;
+  justify-content: stretch ;
+}
 .btn {
   padding: 10px 20px;
   border: 1px solid #000;

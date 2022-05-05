@@ -21,12 +21,26 @@ function Header() {
             <Link to='/'>Gozem Package-Tracker</Link>
         </div>
         <ul>
-            {user ? (<li>
+            {user ? (<>
+                <li>
+                <Link to='/createpackage'>
+                   create package
+                </Link>
+                </li>
+                <li>
+                <Link to='/packages'>
+                   view packages
+                </Link>
+                </li>
+            
+            
+            <li>
                 <button className='btn' onClick={onLogout}>
                     <FaSignOutAlt />
                     Logout
                 </button>
-            </li>) : (<>
+            </li>
+            </>) : (<>
             <li>
                 <Link to='/login'>
                     <FaSignInAlt />

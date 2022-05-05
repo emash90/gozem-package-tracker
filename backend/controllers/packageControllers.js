@@ -39,14 +39,14 @@ const createPackage = asyncHandler(async (req, res) => {
             from_name: req.body.from_name,
             from_address: req.body.from_address,
             from_location: {
-                latitude: req.body.from_location.latitude,
-                longitude: req.body.from_location.longitude
+                latitude: req.body.from_locationLatitude,
+                longitude: req.body.from_locationLongitude
             },
             to_name: req.body.to_name,
             to_address: req.body.to_address,
             to_location: {
-                latitude: req.body.from_location.latitude,
-                longitude: req.body.from_location.longitude
+                latitude: req.body.from_locationLatitude,
+                longitude: req.body.from_locationLongitude
             }
         })
         console.log(req.body);
