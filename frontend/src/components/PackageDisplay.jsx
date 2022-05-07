@@ -11,25 +11,16 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { toast } from 'react-toastify'
-import { makeStyles } from '@mui/styles'
-import { withStyles } from '@material-ui/styles';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { deletePackage } from '../features/packages/packageSlice'
+import PackageDetails from './PackageDetails'
+import { History } from 'history'
+
 import Button from '@material-ui/core/Button';
 
-const useStyles = makeStyles((theme) => ({
-    table: {
-        minWidth: 650,
-    },
-    tableContainer: {
-        margin: '10px 10px',
-        maxWidth: 950,
-    },
-
-}))
-
-
 function PackageDisplay() {
-    function createData(description, from_name, to_name, createdAt) {
-    return { description, from_name, to_name, createdAt };
+    function createData(description, from_name, to_name, createdAt, packageDetails, deletePackage) {
+    return { description, from_name, to_name, createdAt, packageDetails, deletePackage };
     }
     const rows = []
     const [tableData, setTableData] =useState([])
@@ -38,24 +29,30 @@ function PackageDisplay() {
 
     const { user } = useSelector((state) => state.auth)
     const {packages, isError, isLoading, isSuccess, message} = useSelector((state) => state.packages)
-
     useEffect(() => {
-        if(!user) {
-            navigate('/login')
-        }
-       if(isError) {
-           console.log(message);
-       }
-        dispatch(getPackages())
-       
-        return () => {
-            dispatch(reset())
-        }
-        
-        
-        
-    }, [navigate, isError, message, user])
+      if(isError) {
+        console.log(message);
+      }
+      if(!user) {
+        navigate('/login')
+      }
+      dispatch(getPackages())
+      setTableData(packages)
+      return () => {
+        dispatch(reset())
+      }
+    }, [user])
     
+    const handleDelete = async(id) => {
+      if(window.confirm("are you sure you want to delete the package?")){
+      
+      await dispatch(deletePackage(id))
+
+      dispatch(getPackages())}
+    }
+    const handleDetails = async (id) => {
+      await navigate(`/client/package/${id}`) 
+    }
     if(isLoading) {
         return <Spinner />
     }
@@ -72,19 +69,29 @@ function PackageDisplay() {
            <TableCell align="right">delete package</TableCell>
          </TableRow>
        </TableHead>
-       <TableBody>
-         {packages.map((pack) => (
-           <TableRow key={pack._id}>
-             <TableCell component="th" scope="row">
-               {pack.description}
-             </TableCell>
-             <TableCell align="right">{pack.from_name}</TableCell>
-             <TableCell align="right">{pack.to_name}</TableCell>
-             <TableCell align="right">{new Date(pack.createdAt).toLocaleDateString()}</TableCell>
-             <TableCell align="right"><button>details</button></TableCell>
-             <TableCell align="right"><button>delete</button></TableCell>
-           </TableRow>
-         ))}
+       <TableBody>     
+         {packages.length > 0 ? (
+           packages.map((pack) => (
+             <TableRow key={pack._id}>
+               <TableCell component="th" scope="row">
+                 {pack.description}
+               </TableCell>
+               <TableCell align="right">{pack.from_name}</TableCell>
+               <TableCell align="right">{pack.to_name}</TableCell>
+               <TableCell align="right">{new Date(pack.createdAt).toLocaleDateString()}</TableCell>
+               <TableCell align="right"><Button variant="outlined" 
+               onClick={() => {handleDetails(pack._id)}}
+               >
+                 Details</Button></TableCell>
+               <TableCell align="right"><Button variant="outlined" startIcon={<DeleteIcon />}
+               onClick={()=> {handleDelete(pack._id)}}
+               >Delete</Button></TableCell>
+             </TableRow>
+           ))
+           ) : (
+             <h1>You do not have any packages at the moment </h1>
+           )
+          }     
        </TableBody>
      </Table>
    </TableContainer>

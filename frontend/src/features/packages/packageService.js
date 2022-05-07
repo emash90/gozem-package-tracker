@@ -26,8 +26,52 @@ const getPackages = async (token) => {
 
     return response.data
 }
+
+//get one package 
+
+const getOnePackage = async (packageId, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + packageId, config)
+
+    return response.data
+    
+}
+
+//update package
+const updatedPackage = async (id, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.patch(API_URL + id, config)
+
+    return response.data
+    
+}
+
+//delete user packages
+
+const deletePackage = async (packageId, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.delete(API_URL + packageId, config)
+
+    return response.data
+    
+}
 const packageService = {
     createPackage,
-    getPackages
+    getPackages,
+    deletePackage,
+    getOnePackage,
+    updatedPackage
 }
 export default packageService

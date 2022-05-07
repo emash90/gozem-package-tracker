@@ -6,6 +6,7 @@ import {toast} from 'react-toastify'
 import {login, reset} from '../features/auth/authSlice'
 import { useState, useEffect } from 'react'
 import Spinner from '../components/Spinner'
+import Home from './Home'
 
 function Login() {
     const [formData, setFormData] =useState({
@@ -40,10 +41,10 @@ function Login() {
         if(isSuccess) {
             if(user.userType === "client"){
                 toast('welcome client')
-                navigate('/')
+                navigate('/client')
             } else {
                 toast('welcome driver')
-                navigate('/')
+                navigate('/driver')
             }
             }  
 
@@ -56,6 +57,7 @@ function Login() {
     }
   return (
     <>
+    <Home />
     <section className='heading'>
         <h5>
             <FaSignInAlt /> Login

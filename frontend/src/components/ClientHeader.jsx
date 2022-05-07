@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import {logout, reset} from '../features/auth/authSlice'
 import { toast } from 'react-toastify'
 
-function Header() {
+function ClientHeader() {
     const navigate = useNavigate()
     const dispatch= useDispatch()
     const {user} = useSelector((state) => state.auth)
@@ -23,12 +23,12 @@ function Header() {
         <ul>
             {user ? (<>
                 <li>
-                <Link to='/createpackage'>
+                <Link to='/client/createpackage'>
                    create package
                 </Link>
                 </li>
                 <li>
-                <Link to='/packages'>
+                <Link to='/client/packages'>
                    view packages
                 </Link>
                 </li>
@@ -59,4 +59,4 @@ function Header() {
   )
 }
 
-export default Header
+export default ClientHeader

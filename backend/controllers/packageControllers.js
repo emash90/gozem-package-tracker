@@ -104,7 +104,7 @@ const deletePackage = asyncHandler(async(req, res) => {
             res.status(400)
             throw new Error('cannot find package with that id')
         }
-        res.status(200).send('delete successful')
+        res.status(200).json(packageDelete.id)
     } catch (error) {
         res.status(500)
         throw new Error('error occured')

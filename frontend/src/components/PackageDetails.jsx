@@ -1,12 +1,15 @@
-import {useState} from'react'
-import { useDispatch} from 'react-redux'
-import { Navigate, useNavigate } from 'react-router-dom'
-import {createPackage} from '../features/packages/packageSlice'
+import {useState, useEffect} from'react'
+import { useDispatch, useSelector} from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
+import {createPackage, getOnePackage, updatedPackage} from '../features/packages/packageSlice'
 
 
 
 
-function PackageForm() {
+
+function PackageDetails() {
+    let { id } = useParams()
+    const { packages } = useSelector((state) => state.packages)
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         description: '',
@@ -25,16 +28,22 @@ function PackageForm() {
     })
     const {description, height, weight, depth, width, from_name, from_address, from_locationLatitude, from_locationLongitude, to_address, to_name, to_locationLatitude, to_locationLongitude } = formData
     const dispatch = useDispatch()
-
+    useEffect(() => {
+        dispatch(getOnePackage(id))
+    }, [getOnePackage])
     const onChange = (e) => {
         setFormData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value,
         }))
     }
-    const onSubmit = async (e) => {
+    useEffect(() => {
+        if(packages) {
+            setFormData({...packages})
+        }
+    }, [packages])
+    const handleUpdate = async (e) => {
         try {
-            await e.preventDefault()
             const packageData = await {
                 description,
                 height,
@@ -50,8 +59,8 @@ function PackageForm() {
                 to_locationLatitude,
                 to_locationLongitude
             }   
-            await dispatch(createPackage(packageData))
-            setFormData({
+            
+            await setFormData({
                 description: '',
                 height: '',
                 weight: '',
@@ -66,6 +75,7 @@ function PackageForm() {
                 to_locationLatitude: '',
                 to_locationLongitude: ''
             })
+            await dispatch(updatedPackage(packages, id))
             navigate('/client/packages')
         }catch (error) {
             console.log(error);
@@ -73,7 +83,7 @@ function PackageForm() {
     }
   return (
     <section className='form'>
-        <form onSubmit={onSubmit}>
+        <form>
             <div className="form-group">
                 <label htmlFor="text">package description</label>
                 <input type="text" name='description' id='description' value={description} onChange={onChange} placeholder='enter package description' />
@@ -129,11 +139,11 @@ function PackageForm() {
                 </div>
             </div>
             <div className="form-group">
-                <button className='btn btn-block' type='submit'>Add Package</button>
+                <button className='btn btn-block' type='button' onClick={() => {handleUpdate(id)}} >Update Package</button>
             </div>
         </form>
     </section>
   )
 }
 
-export default PackageForm
+export default PackageDetails

@@ -6,6 +6,7 @@ import {register, reset} from '../features/auth/authSlice'
 import { FaUser } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
 import Spinner from '../components/Spinner'
+import Home from './Home'
 
 function Register() {
     const [formData, setFormData] = useState({
@@ -48,6 +49,8 @@ function Register() {
 
         if(password !== password2) {
             toast.error('passwords do not match')
+        } else if (password.length < 6) {
+            toast('ensure password is more than 6 characters')
         } else if(!firstName || !lastName || !email ||! password || !accountType){
             toast.error('Please ensure all fields are filled')
         } else if (accountType !== "driver" && accountType !== "client") {
@@ -68,6 +71,7 @@ function Register() {
     }
   return (
     <>
+    <Home />
         <section className='heading'>
             <h5>
                 <FaUser /> Register
