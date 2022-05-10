@@ -10,6 +10,7 @@ import {createPackage, getOnePackage, updatedPackage} from '../features/packages
 function PackageDetails() {
     let { id } = useParams()
     const { packages } = useSelector((state) => state.packages)
+    const { user } = useSelector((state) => state.auth)
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         description: '',

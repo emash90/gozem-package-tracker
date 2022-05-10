@@ -42,9 +42,12 @@ function Login() {
             if(user.userType === "client"){
                 toast('welcome client')
                 navigate('/client/packages')
-            } else {
+            } else if(user.userType === "driver") {
                 toast('welcome driver')
                 navigate('/driver/deliveries')
+            } else {
+                toast('welcome admin')
+                navigate('/admin')
             }
             }  
 

@@ -53,8 +53,8 @@ function Register() {
             toast('ensure password is more than 6 characters')
         } else if(!firstName || !lastName || !email ||! password || !accountType){
             toast.error('Please ensure all fields are filled')
-        } else if (accountType !== "driver" && accountType !== "client") {
-            toast.error("please select either 'client' or 'driver'")
+        } else if (accountType !== "driver" && accountType !== "client" && accountType !== "admin") {
+            toast.error("please select either 'client', 'driver' or 'admin'")
         } else {
             const userData = {
                 firstName,

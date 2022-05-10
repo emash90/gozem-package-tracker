@@ -3,7 +3,7 @@ import deliveryService from './deliveryService'
 
 
 const initialState = {
-    allPackages: [],
+    allDeliveries: [],
     deliveries: [],
     isError: false,
     isSuccess: false,
@@ -27,6 +27,16 @@ export const getDeliveries = createAsyncThunk('deliveries/getAll', async(_, thun
     try {
         const token = thunkAPI.getState().auth.user.token
         return await deliveryService.getDeliveries(token)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+//get all deliveries
+export const getAllDeliveries = createAsyncThunk('deliveries/getEverything', async(_, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await deliveryService.getAllDeliveries(token)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)
@@ -71,7 +81,12 @@ export const deliverySlice = createSlice({
     name: 'deliveries',
     initialState,
     reducers: {
-        reset: (state) => initialState
+        reset: (state) => {
+            state.isError = false
+            state.isSuccess = false
+            state.isLoading = false
+            state.message = ''
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -97,6 +112,19 @@ export const deliverySlice = createSlice({
                 state.deliveries = action.payload
             })
             .addCase(getDeliveries.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getAllDeliveries.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getAllDeliveries.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.allDeliveries = action.payload
+            })
+            .addCase(getAllDeliveries.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

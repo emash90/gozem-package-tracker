@@ -8,6 +8,7 @@ const user = JSON.parse(localStorage.getItem('user'))
 
 const initialState = {
     user: user ? user : null,
+    allUsers: [],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -34,7 +35,16 @@ export const login = createAsyncThunk('auth/login', async(user, thunkAPI) => {
         return thunkAPI.rejectWithValue(message)
     }
 })
-
+//get all users
+export const getAllUsers = createAsyncThunk('auth/getAll', async(_, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await authService.getAllUsers(token)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
 //logout user
 export const logout = createAsyncThunk ('auth/logout', async() => {
     await authService.logout()
@@ -45,6 +55,7 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         reset: (state) => {
+
             state.isLoading = false
             state.isSuccess = false
             state.isError = false
@@ -83,6 +94,20 @@ export const authSlice = createSlice({
                 state.message = action.payload
                 state.user = null
                 state.userType = null
+            })
+            .addCase(getAllUsers.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getAllUsers.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isError = false
+                state.isSuccess = true
+                state.allUsers = action.payload
+            })
+            .addCase(getAllUsers.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = null

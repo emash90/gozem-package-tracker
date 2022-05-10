@@ -1,13 +1,16 @@
+import { useSelect } from '@mui/base'
 import {useState} from'react'
-import { useDispatch} from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import {createDelivery} from '../features/Delivery/deliverySlice'
+import Spinner from './Spinner'
 
 
 
 
 function DeliveryForm() {
     let { id } = useParams()
+    const { isLoading, isSuccess, message, deliveries, allPackages } = useSelector((state) => state.delivery)
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         packageId: id,
@@ -53,6 +56,9 @@ function DeliveryForm() {
         }catch (error) {
             console.log(error);
         }
+    }
+    if(isLoading) {
+        return <Spinner />
     }
   return (
     <section className='form'>

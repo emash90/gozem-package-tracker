@@ -26,6 +26,17 @@ const login = async(userData) => {
     }
     return response.data
 }
+// get all users
+const getAllUsers = async (token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'allusers', config)
+    console.log(response.data);
+    return response.data
+}
 //logout user
 const logout = () => {
     localStorage.removeItem('user')
@@ -33,6 +44,6 @@ const logout = () => {
 }
 
 const authService ={
-    register, logout, login
+    register, logout, login, getAllUsers
 }
 export default authService

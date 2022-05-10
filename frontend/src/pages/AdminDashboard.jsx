@@ -29,7 +29,6 @@ function AdminDashboard() {
     <>
     <AdminHeader />
       <section className='heading'>
-        <h3>welcome {user ? user.name : 'Guest'}</h3>
         <p>Admin Dashboard</p>
       </section>
       <section className='main-section'>

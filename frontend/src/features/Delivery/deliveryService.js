@@ -27,6 +27,18 @@ const getDeliveries = async (token) => {
     return response.data
 }
 
+//get all the deliveries
+const getAllDeliveries = async (token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL + 'alldeliveries', config)
+
+    return response.data
+}
+
 
 //get one Delivery
 
@@ -73,6 +85,7 @@ const deliveryService = {
     getDeliveries,
     getOneDelivery,
     updatedDelivery,
-    deleteDelivery
+    deleteDelivery,
+    getAllDeliveries
 }
 export default deliveryService

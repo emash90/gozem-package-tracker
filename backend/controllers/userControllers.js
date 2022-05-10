@@ -70,6 +70,17 @@ const loginUser = asyncHandler(async(req, res) => {
     }
 })
 
+const getAllUsers = asyncHandler(async(req, res) => {
+    try {
+        const allUsers = await User.find()
+        res.status(200).json(allUsers)
+    } catch (error) {
+        res.status(500)
+        throw new Error('error occured') 
+    }
+})
+
+
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: '30d',
@@ -78,7 +89,8 @@ const generateToken = (id) => {
 
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    getAllUsers
 
 }
 
