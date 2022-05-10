@@ -90,6 +90,9 @@ function Login() {
             <div className="form-group">
                 <button type='submit' className='btn btn-block'>Login</button>
             </div>
+            <div className="form-group">
+                    <p>No account? <a href="/register">Register</a> </p>
+                </div>
         </form>
     </section>
     

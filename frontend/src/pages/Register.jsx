@@ -76,7 +76,6 @@ function Register() {
             <h5>
                 <FaUser /> Register
             </h5>
-            <p>Please create an account</p>
         </section>
         <section className='form'>
             <form onSubmit={onSubmit}>
@@ -148,6 +147,9 @@ function Register() {
                 </div>
                 <div className="form-group">
                     <button type='submit' className='btn btn-block'>Register</button>
+                </div>
+                <div className="form-group">
+                    <p>Already have an account? <a href="/login">Login</a> </p>
                 </div>
             </form>
         </section>
