@@ -31,7 +31,16 @@ export const getPackages = createAsyncThunk('packages/getAll', async(_, thunkAPI
         return thunkAPI.rejectWithValue(message)
     }
 })
-
+//get all packages
+export const getAllPackages = createAsyncThunk('packages/getEverything', async(_, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await packageService.getAllPackages(token)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
 //get single package
 
 export const getOnePackage = createAsyncThunk('packages/getOne', async(id, thunkAPI) => {
@@ -70,7 +79,12 @@ export const packageSlice = createSlice({
     name: 'packages',
     initialState,
     reducers: {
-        reset: (state) => initialState
+        reset: (state) => {
+            state.isError = false
+            state.isSuccess = false
+            state.isLoading = false
+            state.message = ''
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -83,6 +97,19 @@ export const packageSlice = createSlice({
                 state.packages.push(action.payload)
             })
             .addCase(createPackage.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getAllPackages.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getAllPackages.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.packages = action.payload
+            })
+            .addCase(getAllPackages.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload

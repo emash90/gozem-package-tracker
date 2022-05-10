@@ -7,6 +7,8 @@ import { toast } from 'react-toastify'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import PackageDetails from '../components/PackageDetails'
 import ClientHeader from '../components/ClientHeader'
+import PackageFilter from '../components/PackageFilter'
+
 
 
 function ClientDashboard() {
@@ -24,18 +26,14 @@ function ClientDashboard() {
   return (
     <>
     <ClientHeader />
-      <section className='heading'>
-        <h3>welcome {user ? user.name : 'Guest'}</h3>
-        <p>Package Dashboard</p>
-      </section>
+    <PackageFilter />
       <section className='main-section'>
         <Routes>
           <Route path='/createpackage' element={<PackageForm />} />
           <Route path='/packages' element={<PackageDisplay />} />
           <Route path='/package/:id' element={<PackageDetails />} />
         </Routes>
-      </section>
-      
+      </section>  
     </>
   )
 }

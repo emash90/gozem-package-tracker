@@ -19,6 +19,7 @@ function ClientHeader() {
     <header className='header'>
         <div className='logo'>
             <Link to='/'>Gozem Package-Tracker</Link>
+            <h3>Hi {user ? user.name : 'Guest'}</h3>
         </div>
         <ul>
             {user ? (<>
@@ -29,11 +30,9 @@ function ClientHeader() {
                 </li>
                 <li>
                 <Link to='/client/packages'>
-                   view packages
+                   My packages
                 </Link>
-                </li>
-            
-            
+                </li>           
             <li>
                 <button className='btn' onClick={onLogout}>
                     <FaSignOutAlt />

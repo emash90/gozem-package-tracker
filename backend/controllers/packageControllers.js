@@ -2,7 +2,15 @@ const asyncHandler = require('express-async-handler')
 const Package = require('../models/packageModel')
 const User = require('../models/userModel')
 
-
+const getAllPackages = asyncHandler(async(req, res) => {
+    try {
+        const allPackages = await Package.find().sort({createdAt:-1})
+        res.status(200).json(allPackages)
+    } catch (error) {
+        res.status(500)
+        throw new Error('error occured')
+    }
+})
 
 
 const getPackage = asyncHandler(async(req, res) => {
@@ -30,6 +38,7 @@ const getOnePackage = asyncHandler(async (req, res) => {
 const createPackage = asyncHandler(async (req, res) => {
     try {
         const newPackage = new Package({
+            packageCreator: req.user.firstName,
             user_id: req.user.id,
             description: req.body.description,
             weight: req.body.weight,
@@ -112,6 +121,7 @@ const deletePackage = asyncHandler(async(req, res) => {
 })
 
 module.exports = {
+    getAllPackages,
     getPackage,
     getOnePackage,
     createPackage,

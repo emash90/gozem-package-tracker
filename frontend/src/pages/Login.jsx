@@ -41,10 +41,10 @@ function Login() {
         if(isSuccess) {
             if(user.userType === "client"){
                 toast('welcome client')
-                navigate('/client')
+                navigate('/client/packages')
             } else {
                 toast('welcome driver')
-                navigate('/driver')
+                navigate('/driver/deliveries')
             }
             }  
 

@@ -8,10 +8,9 @@ const deliverySchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    package_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Package',
-        required: false
+    packageId: {
+        type: String,
+        required: true
     },
     pickup_time: {
         type: String,
@@ -28,11 +27,11 @@ const deliverySchema = new mongoose.Schema({
     location: {
         latitude: {
             type: Number,
-            required: false
+            required: true
         },
         longitude: {
             type: Number,
-            required: false
+            required: true
         }
     },
     status: {

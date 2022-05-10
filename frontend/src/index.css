@@ -49,7 +49,7 @@ h3 {
   align-items: center;
   padding: 20px 0;
   border-bottom: 1px solid #e6e6e6;
-  margin-bottom: 60px;
+  margin-bottom: 20px;
 }
 
 .header ul {
@@ -76,37 +76,20 @@ h3 {
 }
 
 .heading {
+  display: flex;
+  justify-content: flex-start;
   text-align: center;
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   padding: 0 20px;
+  background-color: #555;
 }
-
+.heading div{
+  margin-right: 50px;
+}
 .heading p {
   color: #828282;
-}
-
-.goals {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
-.goal {
-  background-color: #f4f4f4;
-  margin: 10px 0;
-  padding: 20px 0 10px;
-  position: relative;
-}
-
-.goal .close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  cursor: pointer;
-  border: none;
-  background: none;
 }
 
 .form,
@@ -140,6 +123,15 @@ h3 {
 }
 .inline-form-group, .from-details {
   display: flex;
+}
+.form-group-status label {
+  text-align: left;
+  display: block;
+  margin: 10px 10px 15px 3px;
+
+}
+.form-group-status input {
+  margin: 1rem 0rem 2.5rem 2.5rem;
 }
 span {
   font-size: 12px;

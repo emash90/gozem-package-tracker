@@ -15,6 +15,10 @@ const packageSchema = new mongoose.Schema({
         ref: 'Delivery',
         required: false
     },
+    packageCreator: {
+        type:String,
+        required: true
+    },
     description: {
         type: String,
         required: true

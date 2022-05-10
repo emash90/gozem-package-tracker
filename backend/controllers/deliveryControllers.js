@@ -2,11 +2,19 @@ const asyncHandler = require('express-async-handler')
 const Delivery = require('../models/deliveryModel')
 const User = require('../models/userModel')
 
-
+const getAllDeliveries = asyncHandler(async(req, res) => {
+    try {
+        const allDeliveries = await Delivery.find().sort({createdAt:-1})
+        res.status(200).json(allDeliveries)
+    } catch (error) {
+        res.status(500)
+        throw new Error('error occured')
+    }
+})
 
 const getDelivery = asyncHandler(async(req, res) => {
     try {
-        const allDelivery = await Delivery.find({ user: req.user.id }).sort({createdAt:-1})
+        const allDelivery = await Delivery.find({ user_id: req.user.id }).sort({createdAt:-1})
         res.status(200).json(allDelivery)
     } catch (error) {
         res.status(500)
@@ -31,13 +39,13 @@ const createDelivery = asyncHandler(async(req, res) => {
     try {
         const newDelivery = new Delivery({
             user_id: req.user.id,
+            packageId: req.body.packageId,
             pickup_time: req.body.pickup_time,
             start_time: req.body.start_time,
             end_time: req.body.end_time,
-            pickup_time: req.body.pickup_time,
             location: {
-                latitude: req.body.location.latitude,
-                longitude: req.body.location.longitude
+                latitude: req.body.locationLatitude,
+                longitude: req.body.locationLongitude
             },
             status: req.body.status
         })
@@ -71,12 +79,13 @@ const updateDelivery = asyncHandler(async(req, res) => {
         res.status(401)
         throw new Error('User not authorised')
     }
-        const updatedDelivery = await Delivery.findByIdAndUpdate(
+        const updatedDelivery = await Delivery.findOneAndUpdate(
             {_id: deliveryToUpdate.id },
             req.body,
             { new: true, runValidators: true }
         )
-        res.status(200).json(updatedDelivery)
+        console.log(updatedDelivery);
+        res.status(200).json(deliveryToUpdate)
     } catch (error) {
         res.status(500)
         throw new Error('error occured')
@@ -100,7 +109,7 @@ const deleteDelivery = asyncHandler(async(req, res) => {
             res.status(401)
             throw new Error('cannot find delivery with that id')
         }
-        res.status(200).send('delete successful')
+        res.status(200).json(deliveryToDelete.id)
     } catch (error) {
         res.status(500)
         throw new Error('error occured')
@@ -108,6 +117,7 @@ const deleteDelivery = asyncHandler(async(req, res) => {
 })
 
 module.exports = {
+    getAllDeliveries,
     getDelivery,
     getOneDelivery,
     createDelivery,

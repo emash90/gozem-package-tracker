@@ -2,7 +2,7 @@ import {useState, useEffect } from'react'
 import {useSelector, useDispatch} from 'react-redux'
 import Spinner from './Spinner'
 import { useNavigate } from 'react-router-dom'
-import { getPackages, reset } from '../features/packages/packageSlice'
+import { getPackages, reset, getAllPackages} from '../features/packages/packageSlice'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -14,11 +14,12 @@ import { toast } from 'react-toastify'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deletePackage } from '../features/packages/packageSlice'
 import PackageDetails from './PackageDetails'
+
 import Button from '@material-ui/core/Button';
 
-function PackageDisplay() {
+function AllPackages() {
     function createData(description, from_name, to_name, createdAt, packageDetails, deletePackage) {
-    return { description, from_name, to_name, createdAt, packageDetails, deletePackage };
+    return { description, from_name, to_name, createdAt, packageDetails };
     }
     const rows = []
     const [tableData, setTableData] =useState([])
@@ -34,22 +35,15 @@ function PackageDisplay() {
       if(!user) {
         navigate('/login')
       }
-      dispatch(getPackages())
+      dispatch(getAllPackages())
+      console.log(packages);
       setTableData(packages)
       return () => {
         dispatch(reset())
       }
     }, [user])
-    
-    const handleDelete = async(id) => {
-      if(window.confirm("are you sure you want to delete the package?")){
-      
-      await dispatch(deletePackage(id))
-
-      dispatch(getPackages())}
-    }
     const handleDetails = async (id) => {
-      await navigate(`/client/package/${id}`) 
+      await navigate(`/driver/package/${id}`) 
     }
     if(isLoading) {
         return <Spinner />
@@ -64,7 +58,7 @@ function PackageDisplay() {
            <TableCell align="right">package to_name</TableCell>
            <TableCell align="right">package createdAt</TableCell>
            <TableCell align="right">package details</TableCell>
-           <TableCell align="right">delete package</TableCell>
+           <TableCell align="right">package creator</TableCell>
          </TableRow>
        </TableHead>
        <TableBody>     
@@ -81,13 +75,11 @@ function PackageDisplay() {
                onClick={() => {handleDetails(pack._id)}}
                >
                  Details</Button></TableCell>
-               <TableCell align="right"><Button variant="outlined" startIcon={<DeleteIcon />}
-               onClick={()=> {handleDelete(pack._id)}}
-               >Delete</Button></TableCell>
+                 <TableCell align="right">{pack.packageCreator}</TableCell>
              </TableRow>
            ))
            ) : (
-             <h1>You do not have any packages at the moment </h1>
+             <h1>No available packages at the moment</h1>
            )
           }     
        </TableBody>
@@ -96,4 +88,4 @@ function PackageDisplay() {
   )
 }
 
-export default PackageDisplay
+export default AllPackages

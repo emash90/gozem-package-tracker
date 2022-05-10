@@ -19,9 +19,15 @@ function DriverHeader() {
     <header className='header'>
         <div className='logo'>
             <Link to='/'>Gozem Package-Tracker</Link>
+            <h3>Hi {user ? user.name : 'Guest'}</h3>
         </div>
         <ul>
             {user ? (<>
+                <li>
+                <Link to='/driver/allpackages'>
+                   Available Packages
+                </Link>
+                </li>
                 <li>
                 <Link to='/driver/createdelivery'>
                    create delivery
@@ -29,7 +35,7 @@ function DriverHeader() {
                 </li>
                 <li>
                 <Link to='/driver/deliveries'>
-                   view deliveries
+                   My deliveries
                 </Link>
                 </li>
             
@@ -40,6 +46,7 @@ function DriverHeader() {
                     Logout
                 </button>
             </li>
+            
             </>) : (<>
             <li>
                 <Link to='/login'>
