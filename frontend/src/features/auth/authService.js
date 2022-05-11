@@ -34,7 +34,6 @@ const getAllUsers = async (token) => {
         }
     }
     const response = await axios.get(API_URL + 'allusers', config)
-    console.log(response.data);
     return response.data
 }
 //logout user

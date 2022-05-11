@@ -72,7 +72,7 @@ function Deliveries() {
                <TableCell align="center">{new Date(allDelivery.start_time).toLocaleDateString()}</TableCell>
                <TableCell align="center">{new Date(allDelivery.end_time).toLocaleDateString()}</TableCell>
                <TableCell align="center">{allDelivery.user_id}</TableCell>
-               <TableCell align="center"><Button variant="contained" >{allDelivery.status}</Button></TableCell>
+               <TableCell align="center" style={{width: '25px'}}><Button variant="contained" >{allDelivery.status}</Button></TableCell>
              </TableRow>
            ))
            ) : (

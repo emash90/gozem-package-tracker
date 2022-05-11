@@ -65,9 +65,7 @@ function AllPackages() {
          {packages.length > 0 ? (
            packages.map((pack) => (
              <TableRow key={pack._id}>
-               <TableCell component="th" scope="row">
-                 {pack.description}
-               </TableCell>
+               <TableCell component="th" scope="row">{pack.description}</TableCell>
                <TableCell align="right">{pack.from_name}</TableCell>
                <TableCell align="right">{pack.to_name}</TableCell>
                <TableCell align="right">{new Date(pack.createdAt).toLocaleDateString()}</TableCell>

@@ -83,7 +83,7 @@ h3 {
   font-weight: 700;
   margin-bottom: 20px;
   padding: 0 20px;
-  background-color: #555;
+  background-color: rgb(23, 24, 24);
 }
 .heading div{
   margin-right: 50px;
@@ -241,7 +241,23 @@ span {
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
 }
-
+.reports {
+  display: flex;
+  justify-content: space-around;
+  border-right: #777 solid 1px;
+}
+.reports div:nth-of-type(n) {
+  padding:5rem 2rem ;
+  border-right: #777 solid 2px;
+  height: 100vh;
+}
+.reports h3 span {
+  font-size: 32px;
+}
+.reports .failed span {
+  font-size: 15px;
+  color: red;
+}
 @keyframes spin {
   0% {
     transform: rotate(0deg);
