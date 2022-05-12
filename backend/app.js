@@ -6,30 +6,29 @@ require('dotenv').config()
 const http = require('http')
 const cors = require('cors')
 const { Server } = require('socket.io')
-    
+const corsOptions = {
+    origin:'*', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200,
+ }
  const server = http.createServer(app)
 const path =  require('path')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const urlencoded = require('body-parser/lib/types/urlencoded')
 
-const io = new Server(server, {
-    cors: {
-        origin:'*', 
-        credentials:true,            //access-control-allow-credentials:true
-        optionSuccessStatus:200,
-    }
-})
+const io = new Server(server)
+
+
 io.on('connection', (socket)=> {
     console.log(`${socket.id} connected`);
 })
 
 
-
-
 const port = process.env.PORT || 9000
 
 app.use(morgan('dev'))
+app.use(cors(corsOptions))
 app.use(express.json());
 // app.set('view engine', 'ejs')
 // app.set('views', path.join(__dirname, 'views') )

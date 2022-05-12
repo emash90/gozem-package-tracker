@@ -79,7 +79,7 @@ function PackageDisplay() {
                <TableCell align="right">{pack.from_name}</TableCell>
                <TableCell align="right">{pack.to_name}</TableCell>
                <TableCell align="right">{new Date(pack.createdAt).toLocaleDateString()}</TableCell>
-               <TableCell align="right">{pack.packageStatus}</TableCell>
+               <TableCell align="right"> <Button variant='contained'>{pack.packageStatus}</Button></TableCell>
                <TableCell align="right"><Button variant="outlined" 
                onClick={() => {handleDetails(pack._id)}}>
                  Details</Button></TableCell>
