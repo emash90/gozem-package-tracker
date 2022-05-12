@@ -1,7 +1,10 @@
 import axios from 'axios'
 
 
-const API_URL = 'http://localhost:9000/api/package/'
+export const baseURL = process.env.REACT_APP_BASE_URL;
+
+const API_URL = `${baseURL}/api/package/`
+
 
 //create package
 

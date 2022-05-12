@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:9000/api/users/'
+
+export const baseURL = process.env.REACT_APP_BASE_URL;
+
+const API_URL = `${baseURL}/api/users/`
 
 //register user
 
