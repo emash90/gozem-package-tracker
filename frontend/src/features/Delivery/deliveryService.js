@@ -1,9 +1,7 @@
 import axios from 'axios'
 
-export const baseURL = process.env.REACT_APP_BASE_URL;
 
-const API_URL = `${baseURL}/api/delivery/`
-
+const API_URL = 'http://localhost:9000/api/delivery/'
 
 //create delivery
 
