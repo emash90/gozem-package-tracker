@@ -1,6 +1,7 @@
+
 import {useState} from'react'
 import { useDispatch} from 'react-redux'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {createPackage} from '../features/packages/packageSlice'
 
 
@@ -13,6 +14,7 @@ function PackageForm() {
         height: '',
         weight: '',
         depth: '',
+        packageStatus: 'open',
         width: '',
         from_name: '',
         from_address: '',
@@ -23,7 +25,7 @@ function PackageForm() {
         to_locationLatitude: '',
         to_locationLongitude: ''
     })
-    const {description, height, weight, depth, width, from_name, from_address, from_locationLatitude, from_locationLongitude, to_address, to_name, to_locationLatitude, to_locationLongitude } = formData
+    const {description, height, weight, depth, width, from_name, from_address, from_locationLatitude, from_locationLongitude, to_address, to_name, to_locationLatitude, to_locationLongitude, packageStatus } = formData
     const dispatch = useDispatch()
 
     const onChange = (e) => {
@@ -48,7 +50,8 @@ function PackageForm() {
                 to_name,
                 to_address,
                 to_locationLatitude,
-                to_locationLongitude
+                to_locationLongitude,
+                packageStatus
             }   
             await dispatch(createPackage(packageData))
             setFormData({
@@ -64,8 +67,10 @@ function PackageForm() {
                 to_name: '',
                 to_address: '',
                 to_locationLatitude: '',
-                to_locationLongitude: ''
+                to_locationLongitude: '',
+                packageStatus: 'open'
             })
+            console.log(packageData);
             navigate('/client/packages')
         }catch (error) {
             console.log(error);
@@ -126,6 +131,10 @@ function PackageForm() {
                         <input type="number" name='to_locationLatitude' id='to_locationLatitude' value={to_locationLatitude} onChange={onChange} placeholder='latitude'/>
                         <input type="number" name='to_locationLongitude' id='to_locationLongitude' value={to_locationLongitude} onChange={onChange} placeholder='longitude' />
                     </div>
+                </div>
+                <div className="form-group-address" hidden>
+                    <label htmlFor="text">package status</label>
+                    <input type="text" name='packageStatus' id='packageStatus' value={packageStatus} onChange={onChange} />
                 </div>
             </div>
             <div className="form-group">

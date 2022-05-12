@@ -41,6 +41,7 @@ const createPackage = asyncHandler(async (req, res) => {
             packageCreator: req.user.firstName,
             user_id: req.user.id,
             description: req.body.description,
+            packageStatus: req.body.packageStatus,
             weight: req.body.weight,
             height: req.body.height,
             width: req.body.width,
@@ -58,7 +59,7 @@ const createPackage = asyncHandler(async (req, res) => {
                 longitude: req.body.from_locationLongitude
             }
         })
-        console.log(req.body);
+        console.log(newPackage);
         newPackage.save()
         res.status(201).json(newPackage)
     } catch (error) {

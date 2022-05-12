@@ -1,29 +1,35 @@
 const express = require('express')
+const app = express()
 const mongoose = require('mongoose')
 const { errorHandler } = require('./middlewares/errorMiddleware')
 require('dotenv').config()
+const http = require('http')
 const cors = require('cors')
-const corsOptions = {
-    origin:'*', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200,
- }
+const { Server } = require('socket.io')
+    
+ const server = http.createServer(app)
 const path =  require('path')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const urlencoded = require('body-parser/lib/types/urlencoded')
 
+const io = new Server(server, {
+    cors: {
+        origin:'*', 
+        credentials:true,            //access-control-allow-credentials:true
+        optionSuccessStatus:200,
+    }
+})
+io.on('connection', (socket)=> {
+    console.log(`${socket.id} connected`);
+})
 
-
-
-const app = express()
 
 
 
 const port = process.env.PORT || 9000
 
 app.use(morgan('dev'))
-app.use(cors(corsOptions))
 app.use(express.json());
 // app.set('view engine', 'ejs')
 // app.set('views', path.join(__dirname, 'views') )
@@ -52,7 +58,7 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 .then((result) => {
     console.log('connected to the db');
-    app.listen(port, () => {
+    server.listen(port, () => {
         console.log(`app listening on port ${port}`);
     })
 })

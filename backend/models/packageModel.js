@@ -10,9 +10,8 @@ const packageSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    active_delivery_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Delivery',
+    packageStatus: {
+        type: String,
         required: false
     },
     packageCreator: {

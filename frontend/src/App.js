@@ -1,4 +1,4 @@
-import React from 'react'
+import io from 'socket.io-client'
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
@@ -11,6 +11,8 @@ import Header from './components/ClientHeader'
 import { useSelector } from 'react-redux'
 import Home from './pages/Home'
 
+
+const socket = io.connect('https://packagedeliveryapp.herokuapp.com')
 const App = () => {
   const {user} = useSelector((state) => state.auth)
   return (

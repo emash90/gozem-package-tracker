@@ -17,11 +17,12 @@ import PackageDetails from './PackageDetails'
 import Button from '@material-ui/core/Button';
 
 function PackageDisplay() {
-    function createData(description, from_name, to_name, createdAt, packageDetails, deletePackage) {
-    return { description, from_name, to_name, createdAt, packageDetails, deletePackage };
+    function createData(description, from_name, to_name, createdAt, status, packageDetails, deletePackage) {
+    return { description, from_name, to_name, createdAt, status, packageDetails, deletePackage };
     }
     const rows = []
     const [tableData, setTableData] =useState([])
+    const [status, setStatus] = useState('open')
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -40,7 +41,7 @@ function PackageDisplay() {
         dispatch(reset())
       }
     }, [user])
-    
+    useEffect(() => {}, )
     const handleDelete = async(id) => {
       if(window.confirm("are you sure you want to delete the package?")){
       
@@ -59,10 +60,12 @@ function PackageDisplay() {
      <Table aria-label="simple table" stickyHeader>
        <TableHead>
          <TableRow>
+           <TableCell>#</TableCell>
            <TableCell>package description</TableCell>
            <TableCell align="right">package from_name</TableCell>
            <TableCell align="right">package to_name</TableCell>
            <TableCell align="right">package createdAt</TableCell>
+           <TableCell align="right">package status</TableCell>
            <TableCell align="right">package details</TableCell>
            <TableCell align="right">delete package</TableCell>
          </TableRow>
@@ -71,15 +74,14 @@ function PackageDisplay() {
          {packages.length > 0 ? (
            packages.map((pack) => (
              <TableRow key={pack._id}>
-               <TableCell component="th" scope="row">
-                 {pack.description}
-               </TableCell>
+               <TableCell align="right">{}</TableCell>
+               <TableCell component="th" scope="row">{pack.description}</TableCell>
                <TableCell align="right">{pack.from_name}</TableCell>
                <TableCell align="right">{pack.to_name}</TableCell>
                <TableCell align="right">{new Date(pack.createdAt).toLocaleDateString()}</TableCell>
+               <TableCell align="right">{pack.packageStatus}</TableCell>
                <TableCell align="right"><Button variant="outlined" 
-               onClick={() => {handleDetails(pack._id)}}
-               >
+               onClick={() => {handleDetails(pack._id)}}>
                  Details</Button></TableCell>
                <TableCell align="right"><Button variant="outlined" startIcon={<DeleteIcon />}
                onClick={()=> {handleDelete(pack._id)}}
