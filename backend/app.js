@@ -17,7 +17,11 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const urlencoded = require('body-parser/lib/types/urlencoded')
 
-const io = new Server(server)
+const io = new Server(server, {
+    cors: {
+        methods: ['GET', 'POST', 'PATCH', 'DELETE']
+    }
+})
 
 
 io.on('connection', (socket)=> {
