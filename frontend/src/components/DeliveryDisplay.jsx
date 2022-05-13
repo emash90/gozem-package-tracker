@@ -41,6 +41,7 @@ function DeliveryDisplay() {
       }
     }, [user])
     
+    
     const handleDelete = async(id) => {
       if(window.confirm("are you sure you want to delete the package?")){
       
@@ -93,7 +94,7 @@ function DeliveryDisplay() {
              </TableRow>
            ))
            ) : (
-             <h1>You do not have any packages at the moment </h1>
+             <h1>You do not any deliveries at the moment. Got to <a href="">available</a> </h1>
            )
           }     
        </TableBody>

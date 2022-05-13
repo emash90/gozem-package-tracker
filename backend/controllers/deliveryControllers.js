@@ -47,7 +47,8 @@ const createDelivery = asyncHandler(async(req, res) => {
                 latitude: req.body.locationLatitude,
                 longitude: req.body.locationLongitude
             },
-            status: req.body.status
+            status: req.body.status,
+            deliveryLocation: req.body.deliveryLocation
         })
         console.log(req.body);
         newDelivery.save()

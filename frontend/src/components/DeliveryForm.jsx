@@ -1,8 +1,9 @@
 import { useSelect } from '@mui/base'
-import {useState} from'react'
+import {useState, useEffect} from'react'
 import { useDispatch, useSelector} from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import {createDelivery} from '../features/Delivery/deliverySlice'
+import { getOnePackage } from '../features/packages/packageSlice'
 import Spinner from './Spinner'
 
 
@@ -10,20 +11,30 @@ import Spinner from './Spinner'
 
 function DeliveryForm() {
     let { id } = useParams()
-    const { isLoading, isSuccess, message, deliveries, allPackages } = useSelector((state) => state.delivery)
+    const { isLoading, isSuccess, message, deliveries, allPackages } = useSelector((state) => state.deliveries)
+    const { packages } = useSelector((state) => state.packages)
     const navigate = useNavigate()
+    useEffect(() => {
+        dispatch(getOnePackage(id))
+        if(packages) {
+            setFormData({...packages})
+        }
+        console.log(packages);    
+    }, [getOnePackage])
+
     const [formData, setFormData] = useState({
         packageId: id,
         pickup_time: '',
         start_time: '',
         end_time: '',
-        locationLatitude: '',
-        locationLongitude: '',
+        locationLatitude: packages.to_location.longitude,
+        locationLongitude: packages.to_location.latitude,
         status: '',
+        deliveryLocation: packages.to_address
     })
-    const {packageId, pickup_time, start_time, end_time, locationLatitude, locationLongitude, status} = formData
+    const {packageId, pickup_time, start_time, end_time, locationLatitude, locationLongitude, status, deliveryLocation} = formData
     const dispatch = useDispatch()
-
+    
     const onChange = (e) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -40,9 +51,11 @@ function DeliveryForm() {
                 end_time,
                 locationLatitude,
                 locationLongitude,
-                status
+                status,
+                deliveryLocation
             }   
             await dispatch(createDelivery(deliveryData))
+           
             setFormData({
                 packageId: '',
                 pickup_time: '',
@@ -50,7 +63,8 @@ function DeliveryForm() {
                 end_time: '',
                 locationLatitude: '',
                 locationLongitude: '',
-                status: ''
+                status: '',
+                deliveryLocation
             })
             navigate('/driver/deliveries')
         }catch (error) {
@@ -65,9 +79,17 @@ function DeliveryForm() {
         <form onSubmit={onSubmit}>
             <div className="from-to-details">
                 <div>
-                <div className="form-group-name">
+                <div className="form-group-name" hidden>
                         <label htmlFor="text">Package Id</label>
                         <input type="text" name='packageId' id='packageId' value={id.toString()} disabled />
+                    </div>
+                <div className="form-group-name">
+                        <label htmlFor="text">Package Descriptionn</label>
+                        <input type="text" name='packageDescription' id='packageDescription' value={packages.description} disabled />
+                    </div>
+                <div className="form-group-name">
+                        <label htmlFor="text">Delivery Destination</label>
+                        <input type="text" name='deliveryLocation' id='deliveryLocation' value={packages.to_address} disabled />
                     </div>
                     <div className="form-group-name">
                         <label htmlFor="text">Pick_up Time</label>
@@ -90,8 +112,8 @@ function DeliveryForm() {
                     </div>
                     <div className="form-group-location">
                         <label htmlFor="text">Delivery location</label>
-                        <input type="number" name='locationLatitude' id='locationLatitude' value={locationLatitude} onChange={onChange} placeholder='latitude'/>
-                        <input type="number" name='locationLongitude' id='locationLongitude' value={locationLongitude} onChange={onChange} placeholder='longitude' />
+                        <input disabled type="number" name='locationLatitude' id='locationLatitude' value={locationLatitude} onChange={onChange} placeholder='latitude'/>
+                        <input disabled type="number" name='locationLongitude' id='locationLongitude' value={locationLongitude} onChange={onChange} placeholder='longitude' />
                     </div>
                 </div> 
             </div>

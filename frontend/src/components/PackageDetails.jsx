@@ -1,3 +1,4 @@
+import { Button } from '@mui/material'
 import {useState, useEffect} from'react'
 import { useDispatch, useSelector} from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -139,8 +140,9 @@ function PackageDetails() {
                     </div>
                 </div>
             </div>
-            <div className="form-group">
-                <button className='btn btn-block' type='button' onClick={() => {handleUpdate(id)}} >Update Package</button>
+            <div className="form-group-location" style={{textAlign: 'center'}}>
+                <Button className='' type='button' onClick={() => {handleUpdate(id)}} >Update Package</Button>
+                <Button style={{marginLeft: '22px'}} type='button' href='/client/packages' >Back</Button>
             </div>
         </form>
     </section>

@@ -36,7 +36,6 @@ function AllPackages() {
         navigate('/login')
       }
       dispatch(getAllPackages())
-      console.log(packages);
       setTableData(packages)
       return () => {
         dispatch(reset())

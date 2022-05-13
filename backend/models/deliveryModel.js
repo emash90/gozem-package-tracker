@@ -37,6 +37,10 @@ const deliverySchema = new mongoose.Schema({
     status: {
         type: String,
         required: true
+    },
+    deliveryLocation: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true

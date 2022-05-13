@@ -14,7 +14,10 @@ import { toast } from 'react-toastify'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deletePackage } from '../features/packages/packageSlice'
 import PackageDetails from './PackageDetails'
+
+
 import Button from '@material-ui/core/Button';
+
 
 function PackageDisplay() {
     function createData(description, from_name, to_name, createdAt, status, packageDetails, deletePackage) {
@@ -22,6 +25,7 @@ function PackageDisplay() {
     }
     const rows = []
     const [tableData, setTableData] =useState([])
+    const [backgroundColor, setBackgroundColor] = useState('')
     const [status, setStatus] = useState('open')
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -52,6 +56,12 @@ function PackageDisplay() {
     const handleDetails = async (id) => {
       await navigate(`/client/package/${id}`) 
     }
+    const statusColor = (packageStatus) => {
+      console.log('clicked');
+      if(packageStatus === 'open') {
+        setBackgroundColor('.success')
+      }
+    }
     if(isLoading) {
         return <Spinner />
     }
@@ -79,7 +89,10 @@ function PackageDisplay() {
                <TableCell align="right">{pack.from_name}</TableCell>
                <TableCell align="right">{pack.to_name}</TableCell>
                <TableCell align="right">{new Date(pack.createdAt).toLocaleDateString()}</TableCell>
-               <TableCell align="right"> <Button variant='contained'>{pack.packageStatus}</Button></TableCell>
+               <TableCell align="right">
+                 <Button className={setBackgroundColor} onLoad={() => {statusColor(pack.packageStatus)}} variant="contained" >{pack.packageStatus}
+                 </Button>
+                </TableCell>
                <TableCell align="right"><Button variant="outlined" 
                onClick={() => {handleDetails(pack._id)}}>
                  Details</Button></TableCell>

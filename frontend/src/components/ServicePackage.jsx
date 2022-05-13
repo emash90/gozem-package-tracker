@@ -1,3 +1,4 @@
+import { Button } from '@mui/material'
 import {useState, useEffect} from'react'
 import { useDispatch, useSelector} from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -103,7 +104,8 @@ function ServicePackage() {
                 </div>
             </div>
             <div className="form-group">
-                <button className='btn btn-block' type='button' onClick={() => {handleOnClick(id)}} >Deliver Package</button>
+                <Button variant='contained' className='btn btn-block' type='button' onClick={() => {handleOnClick(id)}} >Deliver Package</Button>
+                <Button className='btn btn-block' style={{marginLeft: '22px'}} type='button' href='/driver/allpackages' >Go Back</Button>
             </div>
         </form>
     </section>

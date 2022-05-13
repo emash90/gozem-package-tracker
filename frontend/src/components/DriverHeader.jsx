@@ -29,11 +29,6 @@ function DriverHeader() {
                 </Link>
                 </li>
                 <li>
-                <Link to='/driver/createdelivery'>
-                   create delivery
-                </Link>
-                </li>
-                <li>
                 <Link to='/driver/deliveries'>
                    My deliveries
                 </Link>

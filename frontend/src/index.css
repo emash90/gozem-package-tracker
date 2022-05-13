@@ -280,3 +280,6 @@ span {
     font-size: 1.5rem;
   }
 }
+.success {
+    background-color: green;
+}
