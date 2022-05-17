@@ -7,8 +7,19 @@ import { FaUser } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
 import Spinner from '../components/Spinner'
 import Home from './Home'
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 function Register() {
+    
+    const [value, setValue] = useState('client');
+
+    const handleChange = (event) => {
+        setValue(event.target.value);
+    };
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -51,7 +62,7 @@ function Register() {
             toast.error('passwords do not match')
         } else if (password.length < 6) {
             toast('ensure password is more than 6 characters')
-        } else if(!firstName || !lastName || !email ||! password || !accountType){
+        } else if(!firstName || !lastName || !email ||! password ){
             toast.error('Please ensure all fields are filled')
         } else if (accountType !== "driver" && accountType !== "client" && accountType !== "admin") {
             toast.error("please select either 'client', 'driver' or 'admin'")
@@ -134,7 +145,24 @@ function Register() {
                         onChange={onChange}
                     />
                 </div>
-                <div className="form-group">
+                <div>
+                    <FormControl>
+                        <FormLabel id="accountType">Register as</FormLabel>
+                        <RadioGroup
+                            row
+                            aria-labelledby="accountType"
+                            name="accountType"
+                            value={value}
+                            onChange={handleChange}
+                        >
+                        <FormControlLabel value="client" control={<Radio />} label="client" />
+                        <FormControlLabel value="driver" control={<Radio />} label="driver" />
+                        <FormControlLabel value="admin" control={<Radio />} label="admin" />
+                        </RadioGroup>
+                    </FormControl>
+                </div>
+                
+                {/* <div className="form-group">
                     <input 
                         type='text'
                         name='accountType'
@@ -144,7 +172,7 @@ function Register() {
                         placeholder='register as a client or driver'
                         onChange={onChange}
                     />
-                </div>
+                </div> */}
                 <div className="form-group">
                     <button type='submit' className='btn btn-block'>Register</button>
                 </div>

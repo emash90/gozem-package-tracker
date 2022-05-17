@@ -5,11 +5,21 @@ import { useNavigate, useParams } from 'react-router-dom'
 import {createDelivery} from '../features/Delivery/deliverySlice'
 import { getOnePackage } from '../features/packages/packageSlice'
 import Spinner from './Spinner'
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 
 
 
 function DeliveryForm() {
+    const [statusValue, setStatusValue] = useState('');
+
+    const handleChange = (event) => {
+        setStatusValue(event.target.value);
+    };
     let { id } = useParams()
     const { isLoading, isSuccess, message, deliveries, allPackages } = useSelector((state) => state.deliveries)
     const { packages } = useSelector((state) => state.packages)
@@ -66,6 +76,7 @@ function DeliveryForm() {
                 status: '',
                 deliveryLocation
             })
+            console.log(deliveryData);
             navigate('/driver/deliveries')
         }catch (error) {
             console.log(error);
@@ -103,13 +114,23 @@ function DeliveryForm() {
                         <label htmlFor="text">End Time</label>
                         <input type="date" name='end_time' id='end_time' value={end_time} onChange={onChange} placeholder="enter package delivery end time" />
                     </div>
-                    <div className="form-group-status">
-                        <label htmlFor="text">Delivery Status</label>                   
-                            <input type="checkBox" name='status' id='status' value="picked up" onChange={onChange} />picked up
-                            <input type="checkBox" name='status' id='status' value="in transit" onChange={onChange} />in transit
-                            <input type="checkBox" name='status' id='status' value="delivered" onChange={onChange} />delivered
-                            <input type="checkBox" name='status' id='status' value= "failed delivery" onChange={onChange} />failed
-                    </div>
+                    <div>
+                    <FormControl>
+                        <FormLabel id="accountType">Delivery Status</FormLabel>
+                        <RadioGroup
+                            row
+                            aria-labelledby="status"
+                            name="status"
+                            value={statusValue}
+                            onChange={handleChange}
+                        >
+                        <FormControlLabel value="picked up" control={<Radio />} label="Picked up" />
+                        <FormControlLabel value="intransit" control={<Radio />} label="In transit" />
+                        <FormControlLabel value="delivered" control={<Radio />} label="Delivered" />
+                        <FormControlLabel value="failed" control={<Radio />} label="Failed" />
+                        </RadioGroup>
+                    </FormControl>
+                </div>
                     <div className="form-group-location">
                         <label htmlFor="text">Delivery location</label>
                         <input disabled type="number" name='locationLatitude' id='locationLatitude' value={locationLatitude} onChange={onChange} placeholder='latitude'/>
