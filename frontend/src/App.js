@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux'
 import Home from './pages/Home'
 
 
-const socket = io.connect('http://localhost:3000')
+// const socket = io.connect('http://localhost:3000')
 const App = () => {
   const {user} = useSelector((state) => state.auth)
   return (

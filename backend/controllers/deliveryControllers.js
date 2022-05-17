@@ -43,10 +43,6 @@ const createDelivery = asyncHandler(async(req, res) => {
             pickup_time: req.body.pickup_time,
             start_time: req.body.start_time,
             end_time: req.body.end_time,
-            location: {
-                latitude: req.body.locationLatitude,
-                longitude: req.body.locationLongitude
-            },
             status: req.body.status,
             deliveryLocation: req.body.deliveryLocation
         })

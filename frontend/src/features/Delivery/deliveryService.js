@@ -12,7 +12,7 @@ const createDelivery = async (newDelivery, token) => {
         }
     }
     const response = await axios.post(API_URL, newDelivery, config)
-
+    console.log(newDelivery);
     return response.data
 }
 //get all user deliveries

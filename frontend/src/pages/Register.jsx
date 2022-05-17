@@ -15,11 +15,9 @@ import FormLabel from '@mui/material/FormLabel';
 
 function Register() {
     
-    const [value, setValue] = useState('client');
 
-    const handleChange = (event) => {
-        setValue(event.target.value);
-    };
+    const [value, setValue] = useState('')
+ 
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -48,7 +46,9 @@ function Register() {
     }, [
         user, isError, isSuccess, message, navigate, dispatch
     ])
-
+    const handleClick = (event) => {
+        setValue(event.target.value);
+    };
     const onChange = (e) => {
         setFormData((prevState)=> ({
             ...prevState,
@@ -64,7 +64,7 @@ function Register() {
             toast('ensure password is more than 6 characters')
         } else if(!firstName || !lastName || !email ||! password ){
             toast.error('Please ensure all fields are filled')
-        } else if (accountType !== "driver" && accountType !== "client" && accountType !== "admin") {
+        } else if (accountType == "") {
             toast.error("please select either 'client', 'driver' or 'admin'")
         } else {
             const userData = {
@@ -151,9 +151,11 @@ function Register() {
                         <RadioGroup
                             row
                             aria-labelledby="accountType"
+
                             name="accountType"
                             value={value}
-                            onChange={handleChange}
+                            onClick={handleClick}
+                            onChange={onChange}
                         >
                         <FormControlLabel value="client" control={<Radio />} label="client" />
                         <FormControlLabel value="driver" control={<Radio />} label="driver" />

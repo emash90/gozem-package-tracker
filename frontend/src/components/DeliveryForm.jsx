@@ -15,36 +15,35 @@ import FormLabel from '@mui/material/FormLabel';
 
 
 function DeliveryForm() {
+
     const [statusValue, setStatusValue] = useState('');
 
-    const handleChange = (event) => {
+    const handleClick = (event) => {
         setStatusValue(event.target.value);
     };
     let { id } = useParams()
     const { isLoading, isSuccess, message, deliveries, allPackages } = useSelector((state) => state.deliveries)
     const { packages } = useSelector((state) => state.packages)
     const navigate = useNavigate()
-    useEffect(() => {
-        dispatch(getOnePackage(id))
-        if(packages) {
-            setFormData({...packages})
-        }
-        console.log(packages);    
-    }, [getOnePackage])
-
+    const [packageData, setPackageData] = useState('')
     const [formData, setFormData] = useState({
         packageId: id,
         pickup_time: '',
         start_time: '',
         end_time: '',
-        locationLatitude: packages.to_location.longitude,
-        locationLongitude: packages.to_location.latitude,
         status: '',
-        deliveryLocation: packages.to_address
+        deliveryLocation: packages.to_address,
+        packageDescription: packages.description,
     })
-    const {packageId, pickup_time, start_time, end_time, locationLatitude, locationLongitude, status, deliveryLocation} = formData
+    const {packageId, pickup_time, start_time, end_time, status, deliveryLocation, packageDescription} = formData
     const dispatch = useDispatch()
     
+    useEffect(() => {     
+        dispatch(getOnePackage(id))
+        if(packages) {
+            setPackageData({...packages})
+        }  
+    }, [])
     const onChange = (e) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -59,20 +58,18 @@ function DeliveryForm() {
                 pickup_time,
                 start_time,
                 end_time,
-                locationLatitude,
-                locationLongitude,
                 status,
-                deliveryLocation
+                deliveryLocation,
+                packageDescription
             }   
             await dispatch(createDelivery(deliveryData))
            
             setFormData({
                 packageId: '',
+                packageDescription: '',
                 pickup_time: '',
                 start_time: '',
                 end_time: '',
-                locationLatitude: '',
-                locationLongitude: '',
                 status: '',
                 deliveryLocation
             })
@@ -90,17 +87,17 @@ function DeliveryForm() {
         <form onSubmit={onSubmit}>
             <div className="from-to-details">
                 <div>
-                <div className="form-group-name" hidden>
+                <div className="form-group-name">
                         <label htmlFor="text">Package Id</label>
-                        <input type="text" name='packageId' id='packageId' value={id.toString()} disabled />
+                        <input type="text" name='packageId' id='packageId' value={packageId} onChange={onChange}disabled />
                     </div>
                 <div className="form-group-name">
-                        <label htmlFor="text">Package Descriptionn</label>
-                        <input type="text" name='packageDescription' id='packageDescription' value={packages.description} disabled />
+                        <label htmlFor="text">Package Description</label>
+                        <input type="text" name='packageDescription' id='packageDescription' value={packageDescription} onChange={onChange}disabled />
                     </div>
                 <div className="form-group-name">
                         <label htmlFor="text">Delivery Destination</label>
-                        <input type="text" name='deliveryLocation' id='deliveryLocation' value={packages.to_address} disabled />
+                        <input type="text" name='deliveryLocation' id='deliveryLocation' value={deliveryLocation} onChange={onChange}disabled />
                     </div>
                     <div className="form-group-name">
                         <label htmlFor="text">Pick_up Time</label>
@@ -116,13 +113,14 @@ function DeliveryForm() {
                     </div>
                     <div>
                     <FormControl>
-                        <FormLabel id="accountType">Delivery Status</FormLabel>
+                        <FormLabel id="status">Delivery Status</FormLabel>
                         <RadioGroup
                             row
                             aria-labelledby="status"
                             name="status"
                             value={statusValue}
-                            onChange={handleChange}
+                            onClick={handleClick}
+                            onChange={onChange}
                         >
                         <FormControlLabel value="picked up" control={<Radio />} label="Picked up" />
                         <FormControlLabel value="intransit" control={<Radio />} label="In transit" />
@@ -131,11 +129,6 @@ function DeliveryForm() {
                         </RadioGroup>
                     </FormControl>
                 </div>
-                    <div className="form-group-location">
-                        <label htmlFor="text">Delivery location</label>
-                        <input disabled type="number" name='locationLatitude' id='locationLatitude' value={locationLatitude} onChange={onChange} placeholder='latitude'/>
-                        <input disabled type="number" name='locationLongitude' id='locationLongitude' value={locationLongitude} onChange={onChange} placeholder='longitude' />
-                    </div>
                 </div> 
             </div>
             <div className="form-group">
