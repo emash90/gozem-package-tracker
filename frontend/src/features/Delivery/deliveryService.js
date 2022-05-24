@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 
-const API_URL = 'http://localhost:9000/api/delivery/'
+const API_URL = 'https://packagedeliveryapp.herokuapp.com/'
 
 //create delivery
 
