@@ -18,7 +18,7 @@ function DriverHeader() {
   return (
     <header className='header'>
         <div className='logo'>
-            <Link to='/'>Gozem Package-Tracker</Link>
+            <Link to='/'>Package-Tracker</Link>
             <h3>Hi {user ? user.name : 'Guest'}</h3>
         </div>
         <ul>

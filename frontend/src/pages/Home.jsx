@@ -9,7 +9,7 @@ function Home() {
   return (<>
     <header className='header'>
         <div className='logo'>
-            <Link to='/login'>Gozem Package-Tracker</Link>
+            <Link to='/login'> Package-Tracker</Link>
         </div>
         <ul>
     
