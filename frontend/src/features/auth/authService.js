@@ -3,7 +3,7 @@ import axios from 'axios'
 
 //export const baseURL = process.env.REACT_APP_BASE_URL;
 
-const API_URL = 'https://packagedeliveryapp.herokuapp.com/api/users'
+const API_URL = 'https://packagedeliveryapp.herokuapp.com/api/users/'
 
 //register user
 
